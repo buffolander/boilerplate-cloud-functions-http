@@ -1,0 +1,182 @@
+swagger: "2.0"
+info:
+  title: Sample API
+  description: >-
+    Add your API description here; apply markdown if you whish.
+  version: 1.0.0
+host: api.example.com
+basePath: /v2
+schemes:
+  - https
+paths:
+  /users:
+    get:
+      operationId: usersList
+      summary: >-
+        List Users
+      description: >-
+        n/a
+      parameters:
+        - $ref: "#/parameters/query"
+      produces:
+        - application/json
+      responses:
+        200:
+          $ref: "#/responses/200_userList"
+        400:
+          $ref: "#/responses/400"
+        404:
+          $ref: "#/responses/404"
+  /users/:user_id:
+    get:
+      operationId: usersGet
+      summary: >-
+        Retrieve User data
+      description: >-
+        n/a
+      parameters:
+        - $ref: "#/parameters/user_id"
+        - name: "x-custom"
+          in: "header"
+          type: "string"
+          required: true
+        - name: "x-country"
+          in: "header"
+          type: "string"
+          required: true
+      produces:
+        - application/json
+      responses:
+        200:
+          $ref: "#/responses/200_userData"
+        400:
+          $ref: "#/responses/400"
+        404:
+          $ref: "#/responses/404"
+definitions:
+  User:
+    type: object
+    required:
+      - name
+      - email
+    properties:
+      name:
+        type: string
+        enum:
+          - fred
+          - bruno
+      email:
+        type: string
+        format: email
+      birthday:
+        type: string
+        format: date
+parameters:
+  user_id:
+    name: user_id
+    in: path
+    required: true
+    type: string
+    description: >-
+      n/a
+  query:
+    name: query
+    in: query
+    type: string
+    description: >-
+      n/a
+  user:
+    name: user
+    in: body
+    schema:
+      $ref: "#/definitions/User"
+responses:
+  200_userCreate:
+    description: ok
+    schema:
+      type: object
+      required:
+        - ok
+        - data
+      properties:
+        ok:
+          type: boolean
+          default: true
+        data:
+          type: object
+          allOf:
+            - properties:
+                user_id:
+                  type: string
+            - $ref: "#/definitions/User"
+  200_userData:
+    description: ok
+    schema:
+      type: object
+      required:
+        - ok
+        - data
+      properties:
+        ok:
+          type: boolean
+          default: true
+        data:
+          type: object
+          allOf:
+            - properties:
+                user_id:
+                  type: string
+            - $ref: "#/definitions/User"
+  200_userList:
+    description: ok
+    schema:
+      type: object
+      required:
+        - ok
+        - data
+      properties:
+        ok:
+          type: boolean
+          default: true
+        data:
+          type: array
+          items:
+            type: object
+            allOf:
+              - properties:
+                  user_id:
+                    type: string
+              - $ref: "#/definitions/User"
+  400:
+    description: bad_request
+    schema:
+      type: object
+      required:
+        - ok
+        - message
+        - error
+      properties:
+        ok:
+          type: boolean
+          default: false
+        message:
+          type: string
+          default: bad_request
+        errors:
+          type: object
+          description: >-
+            Detailed error information; required fields, invalid types, invalid enums
+  404:
+    description: not_found
+    schema:
+      type: object
+      required:
+        - ok
+        - message
+      properties:
+        ok:
+          type: boolean
+          default: false
+        message:
+          type: string
+          default: not_found

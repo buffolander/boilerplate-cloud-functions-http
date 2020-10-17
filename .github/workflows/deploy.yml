@@ -1,0 +1,42 @@
+name: CI
+
+# Controls when the action will run. Triggers the workflow on push or pull request
+# events but only for the main branch
+on:
+  push:
+    branches: [main]
+
+env:
+  # The keyfile encoded as a Base64 string, eg. cat my-key.json | base64
+  SERVICE_ACCOUNT_KEY: ${{ secrets.SERVICE_ACCOUNT_KEY }}
+  REF: ${{ github.ref }}
+
+# A workflow run is made up of one or more jobs that can run sequentially or in parallel
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    # Steps represent a sequence of tasks that will be executed as part of the job
+    steps:
+      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Setup
+        run: |
+          chmod +x ./scripts/start-deploy.sh
+          ./scripts/start-deploy.sh -e live
+
+      # Setup gcloud CLI
+      - name: Authenticate
+        uses: GoogleCloudPlatform/github-actions/setup-gcloud@master
+        with:
+          # version: "290.0.1"
+          service_account_key: ${{ env.SERVICE_ACCOUNT_KEY }}
+          project_id: ${{ env.PROJECT }}
+          export_default_credentials: true
+
+      - name: Deploy
+        run: |
+          chmod +x ./scripts/deploy-github-actions.sh
+          ./scripts/deploy-github-actions.sh

@@ -1,0 +1,51 @@
+{
+  "name": "boilerplate-cloud-functions-http",
+  "version": "1.0.0",
+  "description": "Boilerplate code to spin-up a new http triggered Google Cloud Function",
+  "googleCloudSettings": {
+    "projectId": "???",
+    "projectNumber": "???",
+    "region": "us-central1",
+    "timeout": "30s",
+    "memory": "256M"
+  },
+  "main": "src/index.js",
+  "scripts": {
+    "main": "src/index.js",
+    "test": "node_modules/.bin/jest",
+    "lint": "node_modules/.bin/eslint **/*.js --ignore-pattern node_modules/"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/buffolander/boilerplate-cloud-functions-http.git"
+  },
+  "keywords": [
+    "boilerplate",
+    "gcp",
+    "google cloud",
+    "cloud functions"
+  ],
+  "author": {
+    "name": "buffolander",
+    "email": "brdu1976@gmail.com"
+  },
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/buffolander/boilerplate-cloud-functions-http/issues"
+  },
+  "homepage": "https://github.com/buffolander/boilerplate-cloud-functions-http#readme",
+  "devDependencies": {
+    "eslint": "^5.16.0",
+    "eslint-config-airbnb-base": "^13.1.0",
+    "eslint-plugin-import": "^2.18.0",
+    "jest": "^24.7.1"
+  },
+  "dependencies": {
+    "@brdu/express-swagger": "^1.1.0",
+    "dotenv": "^8.2.0",
+    "express": "^4.17.1",
+    "lodash": "^4.17.11",
+    "moment": "^2.29.1",
+    "moment-timezone": "^0.5.31"
+  }
+}
