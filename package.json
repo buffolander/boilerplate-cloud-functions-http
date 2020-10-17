@@ -1,14 +1,7 @@
 {
   "name": "boilerplate-cloud-functions-http",
   "version": "1.0.0",
-  "description": "Boilerplate code to spin-up a new http triggered Google Cloud Function",
-  "googleCloudSettings": {
-    "projectId": "???",
-    "projectNumber": "???",
-    "region": "us-central1",
-    "timeout": "30s",
-    "memory": "256M"
-  },
+  "description": "Boilerplate code to spin-up a new http-triggered Google Cloud Function",
   "main": "src/index.js",
   "scripts": {
     "main": "src/index.js",
